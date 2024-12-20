@@ -11,10 +11,16 @@ cache = TTLCache(maxsize=100, ttl=60)
 # Menggunakan session untuk mengoptimalkan HTTP requests
 session = requests.Session()
 
+# Header dan API key untuk CoinGecko API
+cg_headers = {
+    "accept": "application/json",
+    "x-cg-demo-api-key": "CG-kG6RCQG7WUbgsLurhibPYh5m"
+}
+
 # Fungsi untuk mengambil data dari API dengan cache
 @cached(cache)
-def fetch_data(url):
-    response = session.get(url)
+def fetch_data(url, headers=None):
+    response = session.get(url, headers=headers)
     response.raise_for_status()  # Tangani error HTTP
     return response.json()
 
@@ -30,7 +36,7 @@ def shares():
         # Ambil data dari API eksternal
         shares_data = fetch_data(shares_url)
         pool_data = fetch_data(pool_stats_url)
-        price_data = fetch_data(price_url)
+        price_data = fetch_data(price_url, headers=cg_headers)
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
