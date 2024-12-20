@@ -19,7 +19,8 @@ cg_headers = {
 
 # Fungsi untuk mengambil data dari API dengan cache
 @cached(cache)
-def fetch_data(url, headers=None):
+def fetch_data(url, use_cg_headers=False):
+    headers = cg_headers if use_cg_headers else None
     response = session.get(url, headers=headers)
     response.raise_for_status()  # Tangani error HTTP
     return response.json()
@@ -36,7 +37,7 @@ def shares():
         # Ambil data dari API eksternal
         shares_data = fetch_data(shares_url)
         pool_data = fetch_data(pool_stats_url)
-        price_data = fetch_data(price_url, headers=cg_headers)
+        price_data = fetch_data(price_url, use_cg_headers=True)
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
