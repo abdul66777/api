@@ -61,6 +61,9 @@ def shares():
     est_qus = round(est_income * qus_multiplier, 3)
     est_usd = round(est_qus * price, 3)
 
+    # Menghitung ShareRate
+    share_rate = round(pool_shares / pool_solution, 3) if pool_solution > 0 else 0
+
     # Format hasil
     result = {
         "shares": [
@@ -69,7 +72,8 @@ def shares():
                 "totalShare": total_shares,
                 "EstIncome": est_income,
                 "EstQUS": est_qus,
-                "EstUSD": est_usd
+                "EstUSD": est_usd,
+                "ShareRate": share_rate
             }
         ]
     }
