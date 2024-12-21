@@ -57,7 +57,7 @@ def shares():
     est_income = round(est_income, 3)  # Batasi 3 angka di belakang koma
 
     # Menghitung EstQUS dan EstUSD
-    qus_multiplier = 3773416
+    qus_multiplier = 2506000
     est_qus = round(est_income * qus_multiplier, 3)
     est_usd = round(est_qus * price, 3)
 
